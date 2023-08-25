@@ -25,6 +25,11 @@ public class TaskController extends BaseController {
         return tasksService.getTasks();
     }
 
+    @GetMapping("/{id}")
+    public TasksResponseDTO getTask(@PathVariable Integer id) {
+        return tasksService.getTask(id);
+    }
+
     @PostMapping("")
     public SuccessResponseDTO createNewTasks(@RequestBody TasksRequestDTO tasksRequestDTO) {
         return tasksService.createNewTasks(tasksRequestDTO);

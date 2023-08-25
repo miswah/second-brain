@@ -13,4 +13,6 @@ public interface TasksService {
     List<TasksResponseDTO> getTasks();
 
     SuccessResponseDTO createNewTasks(TasksRequestDTO tasksRequestDTO);
+
+    TasksResponseDTO getTask(int id);
 }
