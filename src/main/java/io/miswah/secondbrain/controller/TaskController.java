@@ -34,4 +34,9 @@ public class TaskController extends BaseController {
     public SuccessResponseDTO createNewTasks(@RequestBody TasksRequestDTO tasksRequestDTO) {
         return tasksService.createNewTasks(tasksRequestDTO);
     }
+
+    @PutMapping("/{id}")
+    public SuccessResponseDTO updateTask(@RequestBody TasksRequestDTO tasksRequestDTO, @PathVariable Integer id) {
+        return tasksService.updatedTask(tasksRequestDTO, id);
+    }
 }

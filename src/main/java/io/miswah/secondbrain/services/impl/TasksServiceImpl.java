@@ -41,12 +41,7 @@ public class TasksServiceImpl implements TasksService {
 
     @Override
     public TasksResponseDTO getTask(int id) {
-        Optional<Tasks> task = tasksRepository.findById(id);
-
-        if (task.isEmpty()) {
-            throw new EntityNotFoundException(HttpStatus.NOT_FOUND, "No Task With that id exists in database");
-        }
-
+        Tasks task = getTaskById(id);
         TasksResponseDTO tasksResponseDTO = modelMapper.map(task, TasksResponseDTO.class);
         return tasksResponseDTO;
     }
@@ -61,4 +56,22 @@ public class TasksServiceImpl implements TasksService {
         return new SuccessResponseDTO(HttpStatus.CREATED, "New Tasks Added", task);
     }
 
+
+    @Override
+    public SuccessResponseDTO updatedTask(TasksRequestDTO tasksRequestDTO, int id) {
+        Tasks task = getTaskById(id);
+        task.setTitle(tasksRequestDTO.getTitle());
+        task.setPriority(tasksRequestDTO.getPriority());
+        tasksRepository.save(task);
+        return new SuccessResponseDTO(HttpStatus.OK, "task Updated Added", task);
+    }
+
+
+    private Tasks getTaskById(int id) {
+        Optional<Tasks> task = tasksRepository.findById(id);
+        if (task.isEmpty()) {
+            throw new EntityNotFoundException(HttpStatus.NOT_FOUND, "No Task With that id exists in database");
+        }
+        return task.get();
+    }
 }
